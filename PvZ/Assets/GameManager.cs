@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,5 +27,15 @@ public class GameManager : MonoBehaviour
         }
     }
     public int sun = 50;
-    public GameObject selectedPlant;
+    public Seedpacket selectedPacket;
+    public Seedpackets seedPackets;
+    public TMP_Text sunText;
+    public void DeselectAll()
+    {
+        seedPackets.DeselectAll();
+    }
+    private void Update()
+    {
+        sunText.text  = sun + "";
+    }
 }

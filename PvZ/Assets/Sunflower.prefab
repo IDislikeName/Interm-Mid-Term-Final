@@ -99,3 +99,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 6
   currentHp: 0
+  sunCost: 50
+  recharge: 7.5

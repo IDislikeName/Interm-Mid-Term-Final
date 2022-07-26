@@ -8,16 +8,19 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler
 {
     public GameObject plant;
     public bool selected = false;
+    public float currentCD = 0;
     public void OnPointerClick(PointerEventData eventData)
     {
-        selected = !selected;
-        if (selected)
+        if (!selected)
         {
-            GameManager.instance.selectedPlant = plant;
+            if (GameManager.instance.sun >= plant.GetComponent<Plant>().sunCost && currentCD <= 0)
+            {
+                Select();
+            }
         }
         else
         {
-            GameManager.instance.selectedPlant = null;
+            GetComponentInParent<Seedpackets>().DeselectAll();
         }
     }
 
@@ -30,6 +33,31 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
+        currentCD -= Time.deltaTime;
+        currentCD= Mathf.Max(0, currentCD);
+    }
+    public void Select()
+    {
         
+        GetComponentInParent<Seedpackets>().DeselectAll();
+        selected = true;
+        GameManager.instance.selectedPacket = this;
+        GetComponent<Image>().color = Color.grey;
+    }
+    public void Deselect()
+    {
+        selected = false;
+        GetComponent<Image>().color = Color.white;
+    }
+    public void Recharge()
+    {
+        currentCD = plant.GetComponent<Plant>().recharge;
+    }
+    public void Plant(GameObject cell)
+    {
+        plant = Instantiate(GameManager.instance.selectedPacket.plant,cell.transform);
+        plant.transform.position = cell.transform.position;
+        GameManager.instance.selectedPacket.Recharge();
+        GameManager.instance.sun -= plant.GetComponent<Plant>().sunCost;
     }
 }

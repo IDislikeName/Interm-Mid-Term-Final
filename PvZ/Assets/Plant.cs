@@ -6,6 +6,8 @@ public class Plant : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
+    public int sunCost;
+    public float recharge;
 
     // Start is called before the first frame update
     void Start()

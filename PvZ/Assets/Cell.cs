@@ -20,7 +20,7 @@ public class Cell : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (GameManager.instance.selectedPlant == null)
+        if (GameManager.instance.selectedPacket == null)
         {
 
         }
@@ -28,9 +28,9 @@ public class Cell : MonoBehaviour
         {
             if (plant == null)
             {
-                plant = Instantiate(GameManager.instance.selectedPlant);
-                plant.transform.position = transform.position;
+                GameManager.instance.selectedPacket.Plant(gameObject);
             }            
         }
+        GameManager.instance.DeselectAll();
     }
 }

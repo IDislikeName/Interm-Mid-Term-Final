@@ -15,4 +15,12 @@ public class Seedpackets : MonoBehaviour
     {
         
     }
+    public void DeselectAll()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<Seedpacket>().Deselect();
+        }
+        GameManager.instance.selectedPacket = null;
+    }
 }
