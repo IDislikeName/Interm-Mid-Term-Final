@@ -55,7 +55,7 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler
     }
     public void Plant(GameObject cell)
     {
-        plant = Instantiate(GameManager.instance.selectedPacket.plant,cell.transform);
+        plant = Instantiate(GameManager.instance.selectedPacket.plant);
         plant.transform.position = cell.transform.position;
         GameManager.instance.selectedPacket.Recharge();
         GameManager.instance.sun -= plant.GetComponent<Plant>().sunCost;
