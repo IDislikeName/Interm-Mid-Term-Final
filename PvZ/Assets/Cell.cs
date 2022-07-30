@@ -18,19 +18,12 @@ public class Cell : MonoBehaviour
     {
         
     }
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
-        if (GameManager.instance.selectedPacket == null)
-        {
-
-        }
-        else
-        {
-            if (plant == null)
-            {
-                GameManager.instance.selectedPacket.Plant(gameObject);
-            }            
-        }
-        GameManager.instance.DeselectAll();
+        transform.GetComponentInParent<GridMap>().mouseHoverCell = gameObject;
+    }
+    private void OnMouseExit()
+    {
+        transform.GetComponentInParent<GridMap>().mouseHoverCell = null;
     }
 }

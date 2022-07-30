@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public Seedpacket selectedPacket;
     public Seedpackets seedPackets;
     public TMP_Text sunText;
+    public bool onUI;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
