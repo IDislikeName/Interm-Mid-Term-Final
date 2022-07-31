@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Seedpacket : MonoBehaviour, IPointerClickHandler
+public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject plant;
     public bool selected = false;
@@ -59,5 +59,15 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler
         plant.transform.position = cell.transform.position;
         GameManager.instance.selectedPacket.Recharge();
         GameManager.instance.sun -= plant.GetComponent<Plant>().sunCost;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameManager.instance.onUI = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameManager.instance.onUI = true;
     }
 }
