@@ -37,4 +37,12 @@ public class Sun : MonoBehaviour
         }
         
     }
+    private void OnMouseOver()
+    {
+        GameManager.instance.onUI = true;
+    }
+    private void OnMouseExit()
+    {
+        GameManager.instance.onUI = false;
+    }
 }

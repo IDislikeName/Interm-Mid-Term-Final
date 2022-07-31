@@ -92,3 +92,4 @@ MonoBehaviour:
   plant: {fileID: 0}
   selected: 0
   currentCD: 0
+  plantSound: {fileID: 8300000, guid: fa1440c051b1f084cbc5b318f39f56bf, type: 3}

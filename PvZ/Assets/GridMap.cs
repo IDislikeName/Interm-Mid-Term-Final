@@ -11,6 +11,7 @@ public class GridMap : MonoBehaviour
     public float cellx = 0.8f;
     public float celly = 1f;
     public GameObject mouseHoverCell;
+    public GameObject phantom;
     private void Start()
     {
         GenerateMap();
@@ -31,28 +32,36 @@ public class GridMap : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (GameManager.instance.selectedPacket != null)
         {
+            phantom.GetComponent<SpriteRenderer>().sprite = GameManager.instance.selectedPacket.plant.GetComponent<SpriteRenderer>().sprite;
             if (mouseHoverCell != null)
             {
-                if (GameManager.instance.selectedPacket == null)
-                {
-
-                }
-                else
+                phantom.transform.position = mouseHoverCell.transform.position;
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     if (mouseHoverCell.GetComponent<Cell>().plant == null)
                     {
                         GameManager.instance.selectedPacket.Plant(mouseHoverCell);
                     }
-                }
-                GameManager.instance.DeselectAll();
+                    GameManager.instance.DeselectAll();
+                }    
             }
             else
             {
-                if(!GameManager.instance.onUI)
-                    GameManager.instance.DeselectAll();
+                phantom.transform.position = new Vector2(100, 100);
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    if (!GameManager.instance.onUI)
+                        GameManager.instance.DeselectAll();
+                }
+                    
             }
+            
+        }
+        else
+        {
+            phantom.transform.position = new Vector2(100, 100);
         }
 
     }

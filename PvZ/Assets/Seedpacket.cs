@@ -9,6 +9,7 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public GameObject plant;
     public bool selected = false;
     public float currentCD = 0;
+    public AudioClip plantSound;
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!selected)
@@ -55,6 +56,7 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     }
     public void Plant(GameObject cell)
     {
+        SoundManager.instance.PlayClip(plantSound);
         plant = Instantiate(GameManager.instance.selectedPacket.plant);
         plant.transform.position = cell.transform.position;
         GameManager.instance.selectedPacket.Recharge();
