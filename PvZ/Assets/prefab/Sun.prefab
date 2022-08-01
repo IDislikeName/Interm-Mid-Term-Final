@@ -116,4 +116,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectSound: {fileID: 8300000, guid: 6cacfc898398b9a4fb512c79f22595ec, type: 3}
   collected: 0
-  target: {x: -3.5, y: 2.7}
+  endTarget: {x: -3.5, y: 2.7}
+  target: {x: 0, y: 0}

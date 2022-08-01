@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public Seedpackets seedPackets;
     public TMP_Text sunText;
     public bool onUI;
+    public bool playing = true;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
