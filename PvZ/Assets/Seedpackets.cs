@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Seedpackets : MonoBehaviour
 {
+    public GameObject shovelBox;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class Seedpackets : MonoBehaviour
         {
             transform.GetChild(i).GetComponent<Seedpacket>().Deselect();
         }
+        shovelBox.GetComponent<Shovel>().Deselect();
         GameManager.instance.selectedPacket = null;
     }
 }

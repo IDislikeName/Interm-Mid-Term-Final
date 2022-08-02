@@ -57,8 +57,8 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public void Plant(GameObject cell)
     {
         SoundManager.instance.PlayClip(plantSound);
-        plant = Instantiate(GameManager.instance.selectedPacket.plant);
-        plant.transform.position = cell.transform.position;
+        cell.GetComponent<Cell>().plant = Instantiate(plant);
+        cell.GetComponent<Cell>().plant.transform.position = cell.transform.position;
         GameManager.instance.selectedPacket.Recharge();
         GameManager.instance.sun -= plant.GetComponent<Plant>().sunCost;
     }

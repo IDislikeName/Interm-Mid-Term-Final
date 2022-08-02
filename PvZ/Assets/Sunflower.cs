@@ -23,8 +23,8 @@ public class Sunflower : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.yellow, 2f);
         yield return new WaitForSeconds(2f);
         GameObject s = Instantiate(sun);
-        s.transform.position = new Vector3(transform.position.x, transform.position.y+0.1f, 1);
-        s.GetComponent<Sun>().target = new Vector3(s.transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y-0.4f,1);
+        s.transform.position = new Vector2(transform.position.x, transform.position.y+0.1f);
+        s.GetComponent<Sun>().target = new Vector2(s.transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y-0.4f);
         GetComponent<SpriteRenderer>().color = Color.Lerp(Color.yellow, Color.white, 2f);
         if (GameManager.instance.playing)
         {

@@ -20,7 +20,6 @@ public class Cell : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        
         transform.GetComponentInParent<GridMap>().mouseHoverCell = gameObject;
     }
     private void OnMouseExit()

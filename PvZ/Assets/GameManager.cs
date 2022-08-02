@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text sunText;
     public bool onUI;
     public bool playing = true;
+    public Shovel shov;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();

@@ -20,11 +20,11 @@ public class Sun : MonoBehaviour
     {
         if (collected)
         {
-            if(Vector2.Distance(transform.position,endTarget)>=0.1f)
+            if (Vector2.Distance(transform.position, endTarget) >= 0.1f)
                 transform.position = Vector2.MoveTowards(transform.position, endTarget, 10 * Time.deltaTime);
             else
             {
-                Destroy(gameObject,0.3f);
+                Destroy(gameObject, 0.3f);
             }
         }
         else
@@ -32,6 +32,7 @@ public class Sun : MonoBehaviour
             if (Vector2.Distance(transform.position, target) >= 0.1f)
                 transform.position = Vector2.MoveTowards(transform.position, target, fallspeed * Time.deltaTime);
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
     private void OnMouseDown()
     {

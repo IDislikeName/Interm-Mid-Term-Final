@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4713017674285353997}
   - component: {fileID: 3389660630615408145}
   - component: {fileID: 3427052521897895774}
-  m_Layer: 0
+  - component: {fileID: 8741456946098469426}
+  m_Layer: 2
   m_Name: Sunflower
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,6 +104,7 @@ MonoBehaviour:
   currentHp: 0
   sunCost: 50
   recharge: 7.5
+  ogcolor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!95 &3389660630615408145
 Animator:
   serializedVersion: 4
@@ -137,3 +139,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sun: {fileID: 3132237416258608015, guid: 584741ac18f1b184fb3a68850039d1bd, type: 3}
   spawnTime: 24
+--- !u!61 &8741456946098469426
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4713017674285353996}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.74, y: 0.73}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.74, y: 0.73}
+  m_EdgeRadius: 0
