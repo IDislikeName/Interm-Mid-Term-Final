@@ -33,12 +33,40 @@ public class GameManager : MonoBehaviour
     public bool onUI;
     public bool playing = true;
     public Shovel shov;
+    public GameObject readyText;
+    public AudioClip start;
+    public AudioClip backGround;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
     }
+    public enum State
+    {
+        SELECTING,
+        PLAYING,
+        LOST,
+        WON,
+    }
+    public State currentState = State.SELECTING;
+    private void Start()
+    {
+        GameStart();
+    }
     private void Update()
     {
         sunText.text  = sun + "";
+    }
+    public void GameStart()
+    {
+        StartCoroutine(Ready());
+        currentState = State.PLAYING;
+
+
+    }
+    IEnumerator Ready()
+    {
+        SoundManager.instance.PlayClip(start);
+        yield return new WaitForSeconds(3f);
+        SoundManager.instance.PlayBGM(backGround);
     }
 }
