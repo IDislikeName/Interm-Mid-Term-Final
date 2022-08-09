@@ -34,8 +34,11 @@ public class GameManager : MonoBehaviour
     public bool playing = true;
     public Shovel shov;
     public GameObject readyText;
+    public GameObject choosePlants;
     public AudioClip start;
     public AudioClip backGround;
+    public GameObject lostText;
+    public AudioClip lose;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour
     public State currentState = State.SELECTING;
     private void Start()
     {
-        GameStart();
+        //GameStart();
     }
     private void Update()
     {
@@ -58,14 +61,32 @@ public class GameManager : MonoBehaviour
     }
     public void GameStart()
     {
-        StartCoroutine(Ready()); 
+        if(seedPackets.packets.Count==6)
+            StartCoroutine(Ready()); 
     }
     IEnumerator Ready()
     {
+        SoundManager.instance.PlayClip(SoundManager.instance.uiSound);
+        choosePlants.SetActive(false);
         SoundManager.instance.PlayClip(start);
         readyText.SetActive(true);
         yield return new WaitForSeconds(3f);
         SoundManager.instance.PlayBGM(backGround);
         currentState = State.PLAYING;
+        
+        GetComponent<SunSpawner>().enabled = true;
+    }
+    public void Lose()
+    {
+        currentState = State.LOST;
+        lostText.SetActive(true);
+        SoundManager.instance.PlayClip(lose);
+        StartCoroutine(RestartGame());
+
+    }
+    IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(0);
     }
 }

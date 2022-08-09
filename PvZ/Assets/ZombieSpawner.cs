@@ -5,16 +5,32 @@ using UnityEngine;
 public class ZombieSpawner : MonoBehaviour
 {
     public GameObject zombie;
+    public bool started = false;
+    public AudioClip spawnClip;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnZombies());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(GameManager.instance.currentState == GameManager.State.PLAYING)
+        {
+            if (!started)
+            {
+                started = true;
+                StartCoroutine(StartSpawnZombies());
+            }
+        }
+    }
+    IEnumerator StartSpawnZombies()
+    {
+        yield return new WaitForSeconds(20f);
+        SoundManager.instance.PlayClip(spawnClip);
+        Spawn();
+        StartCoroutine(SpawnZombies());
     }
     IEnumerator SpawnZombies()
     {

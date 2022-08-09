@@ -7,6 +7,8 @@ public class Pea : MonoBehaviour
     public float damage;
     public float spd;
     public AudioClip hitSound;
+    public bool collided = false;
+    public bool snow;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,12 +24,21 @@ public class Pea : MonoBehaviour
     {
         if (collision.CompareTag("Zombie"))
         {
-            if (!collision.GetComponent<Zombie>().dead)
+            if (!collided)
             {
-                collision.GetComponent<Zombie>().currentHp -= damage;
-                SoundManager.instance.PlayClip(hitSound);
-                Destroy(gameObject);
+                collided = true;
+                if (!collision.GetComponent<Zombie>().dead)
+                {
+                    collision.GetComponent<Zombie>().currentHp -= damage;
+                    if (snow)
+                    {
+                        collision.GetComponent<Zombie>().Slowed();
+                    }
+                    SoundManager.instance.PlayClip(hitSound);
+                    Destroy(gameObject);
+                }
             }
+            
         }
         else if (collision.CompareTag("Wall"))
         {

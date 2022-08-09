@@ -15,6 +15,9 @@ public class Zombie : MonoBehaviour
     public AudioClip biteSound;
     public AudioClip eatSound;
     public AudioClip dieSound;
+    public bool slowed = false;
+    public float slowAtkCD;
+    public float slowTimer;
     public enum State
     {
         WALKING,
@@ -28,11 +31,18 @@ public class Zombie : MonoBehaviour
         Physics.IgnoreLayerCollision(0, 5);
         rb = GetComponent<Rigidbody2D>();
         currentHp = maxHp;
+        slowAtkCD = 2 * atkCD;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (slowTimer>0)
+        {
+            slowed = true;
+            GetComponent<SpriteRenderer>().color = Color.blue;
+            slowTimer -= Time.deltaTime;
+        }
         if (currentHp <= 0)
         {
             currentState = State.DEAD;
@@ -51,7 +61,10 @@ public class Zombie : MonoBehaviour
             if (currentState == State.WALKING)
             {
                 GetComponent<Animator>().SetBool("Attacking", false);
-                rb.velocity = new Vector2(-0.8f / timePerSquare, 0);
+                if(slowed)
+                    rb.velocity = new Vector2(-0.4f / timePerSquare, 0);
+                else
+                    rb.velocity = new Vector2(-0.8f / timePerSquare, 0);
             }
             else if (currentState == State.ATTACKING)
             {
@@ -60,7 +73,10 @@ public class Zombie : MonoBehaviour
                 currentCD -= Time.deltaTime;
                 if (currentCD <= 0 && target != null)
                 {
-                    currentCD = atkCD;
+                    if(slowed)
+                        currentCD = slowAtkCD;
+                    else
+                        currentCD = atkCD;
                     Attack(target);
                 }
             }
@@ -103,5 +119,9 @@ public class Zombie : MonoBehaviour
         SoundManager.instance.PlayClip(dieSound);
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
+    }
+    public void Slowed()
+    {
+        slowTimer = 10f;   
     }
 }

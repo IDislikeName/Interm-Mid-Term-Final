@@ -10,32 +10,70 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public bool selected = false;
     public float currentCD = 0;
     public AudioClip plantSound;
+    public AudioClip clickSound;
+    public bool chosen = false;
+    public Vector3 ogpos;
+    public Transform ogparent;
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!selected)
+        if (GameManager.instance.currentState == GameManager.State.SELECTING)
         {
-            if (GameManager.instance.sun >= plant.GetComponent<Plant>().sunCost && currentCD <= 0)
+            ToggleChoose();
+        }
+        else if (GameManager.instance.currentState == GameManager.State.PLAYING)
+        {
+            if (!selected)
             {
-                Select();
+                if (GameManager.instance.sun >= plant.GetComponent<Plant>().sunCost && currentCD <= 0)
+                {
+                    Select();
+                }
+            }
+            else
+            {
+                SoundManager.instance.PlayClip(SoundManager.instance.uiSound);
+                GetComponentInParent<Seedpackets>().DeselectAll();
             }
         }
-        else
-        {
-            GetComponentInParent<Seedpackets>().DeselectAll();
-        }
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ogpos = GetComponent<RectTransform>().localPosition;
+        ogparent = transform.parent;
+        if (plant.GetComponent<Plant>().recharge > 10f)
+        {
+            Recharge();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentCD -= Time.deltaTime;
-        currentCD= Mathf.Max(0, currentCD);
+        if(GameManager.instance.currentState == GameManager.State.PLAYING)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+            currentCD -= Time.deltaTime;
+            currentCD = Mathf.Max(0, currentCD);
+            if(currentCD>0)
+                transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(1, currentCD / plant.GetComponent<Plant>().recharge, 1);
+            else
+                transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(1, 0, 1);
+            if (!selected)
+            {
+                if (GameManager.instance.sun < plant.GetComponent<Plant>().sunCost||currentCD>0)
+                {
+                    GetComponent<Image>().color = Color.gray;
+                }
+                else
+                {
+                    GetComponent<Image>().color = Color.white;
+                }
+            }           
+        }
     }
     public void Select()
     {
@@ -43,12 +81,14 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         GetComponentInParent<Seedpackets>().DeselectAll();
         selected = true;
         GameManager.instance.selectedPacket = this;
-        GetComponent<Image>().color = Color.grey;
+        GetComponent<Image>().color = Color.gray;
+        SoundManager.instance.PlayClip(clickSound);
     }
     public void Deselect()
     {
         selected = false;
         GetComponent<Image>().color = Color.white;
+
     }
     public void Recharge()
     {
@@ -71,5 +111,26 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         GameManager.instance.onUI = true;
+    }
+    public void ToggleChoose()
+    {
+        if (!chosen)
+        {
+            chosen = true;
+            if (GameManager.instance.seedPackets.packets.Count < 6)
+            {
+                GameManager.instance.seedPackets.packets.Add(gameObject);
+                transform.SetParent(GameManager.instance.seedPackets.transform);
+            }
+        }
+        else
+        {
+            chosen = false;
+            
+            GameManager.instance.seedPackets.packets.Remove(gameObject);
+            transform.SetParent(ogparent);
+            GetComponent<RectTransform>().anchoredPosition = ogpos;
+        }
+        SoundManager.instance.PlayClip(SoundManager.instance.uiSound);
     }
 }

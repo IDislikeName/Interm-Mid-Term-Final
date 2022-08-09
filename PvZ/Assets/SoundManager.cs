@@ -26,6 +26,7 @@ public class SoundManager : MonoBehaviour
     #endregion
     public AudioSource aud;
     public AudioSource BGM;
+    public AudioClip uiSound;
     // Start is called before the first frame update
     void Start()
     {
