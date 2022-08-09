@@ -58,15 +58,14 @@ public class GameManager : MonoBehaviour
     }
     public void GameStart()
     {
-        StartCoroutine(Ready());
-        currentState = State.PLAYING;
-
-
+        StartCoroutine(Ready()); 
     }
     IEnumerator Ready()
     {
         SoundManager.instance.PlayClip(start);
+        readyText.SetActive(true);
         yield return new WaitForSeconds(3f);
         SoundManager.instance.PlayBGM(backGround);
+        currentState = State.PLAYING;
     }
 }
