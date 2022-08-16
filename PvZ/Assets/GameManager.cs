@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     public GameObject lostText;
     public AudioClip lose;
     public float targetTime=139.0f;
+    private RectTransform progressBarRT;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
@@ -55,12 +57,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //GameStart();
+        progressBarRT=GameObject.FindGameObjectWithTag("PBC").GetComponent<RectTransform>();
     }
     private void Update()
     {
         sunText.text  = sun + "";
         if(currentState==State.PLAYING){
             targetTime-=Time.deltaTime;
+            progressBarRT.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, (139f-targetTime)/139f*59.735f);
+            progressBarRT.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, progressBarRT.rect.height);
             if(targetTime<=0.0f){
                Win();
             }

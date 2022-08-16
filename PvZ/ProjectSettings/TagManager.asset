@@ -7,6 +7,7 @@ TagManager:
   - Plant
   - Zombie
   - Wall
+  - PBC
   layers:
   - Default
   - TransparentFX
