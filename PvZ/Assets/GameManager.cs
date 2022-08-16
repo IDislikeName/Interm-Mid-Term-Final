@@ -40,8 +40,12 @@ public class GameManager : MonoBehaviour
     public AudioClip backGround;
     public GameObject lostText;
     public AudioClip lose;
-    public float targetTime=139.0f;
+    public float targetTime=200f;
     private RectTransform progressBarRT;
+    public bool cameraMoving = false;
+    public List<GameObject> finalWave;
+    public AudioClip winSound;
+    public GameObject letter;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
@@ -63,12 +67,35 @@ public class GameManager : MonoBehaviour
     {
         sunText.text  = sun + "";
         if(currentState==State.PLAYING){
-            targetTime-=Time.deltaTime;
-            progressBarRT.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, (139f-targetTime)/139f*59.735f);
-            progressBarRT.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, progressBarRT.rect.height);
-            if(targetTime<=0.0f){
-               Win();
+            
+            if(targetTime>0.0f){
+                targetTime -= Time.deltaTime;
+                progressBarRT.localScale = new Vector3((200f-targetTime) / 200f, 1, 1);
             }
+            else
+            {
+                if (finalWave.Count == 0)
+                {
+                    Win();
+                }
+            }
+        }
+        if (cameraMoving)
+        {
+            Camera.main.transform.Translate(-Camera.main.transform.right * Time.deltaTime*3f);
+            if(Vector2.Distance(Camera.main.transform.position,new Vector2(0, 0)) <= 0.1f)
+            {
+                Camera.main.transform.position = new Vector3(0, 0, -10);
+               cameraMoving = false;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(1);
         }
     }
     public void GameStart()
@@ -80,11 +107,15 @@ public class GameManager : MonoBehaviour
     {
         SoundManager.instance.PlayClip(SoundManager.instance.uiSound);
         choosePlants.SetActive(false);
+        SoundManager.instance.BGM.Stop();
+        cameraMoving = true;
+        yield return new WaitUntil(() =>!cameraMoving);
         SoundManager.instance.PlayClip(start);
         readyText.SetActive(true);
         yield return new WaitForSeconds(3f);
         SoundManager.instance.PlayBGM(backGround);
         currentState = State.PLAYING;
+        seedPackets.shovelBox.SetActive(true);
         
         GetComponent<SunSpawner>().enabled = true;
     }
@@ -99,14 +130,17 @@ public class GameManager : MonoBehaviour
     public void Win(){
         currentState=State.WON;
         Debug.Log("win");
-        StartCoroutine(QuitToMenu());
+        GameObject l= Instantiate(letter);
+        l.transform.position = new Vector2(0, 0);
     }
     IEnumerator RestartGame()
     {
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(1);
     }
-    IEnumerator QuitToMenu(){
+    public IEnumerator QuitToMenu(){
+        SoundManager.instance.BGM.Stop();
+        SoundManager.instance.PlayClip(winSound);
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(0);
     }

@@ -18,6 +18,7 @@ public class Zombie : MonoBehaviour
     public bool slowed = false;
     public float slowAtkCD;
     public float slowTimer;
+    public GameObject headGear;
     public enum State
     {
         WALKING,
@@ -32,6 +33,10 @@ public class Zombie : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         currentHp = maxHp;
         slowAtkCD = 2 * atkCD;
+        if (headGear != null)
+        {
+            currentHp += headGear.GetComponent<HeadGear>().hp;
+        }
     }
 
     // Update is called once per frame
@@ -41,6 +46,11 @@ public class Zombie : MonoBehaviour
         {
             slowed = true;
             GetComponent<SpriteRenderer>().color = Color.blue;
+            if (headGear != null)
+            {
+                headGear.GetComponent<SpriteRenderer>().color = Color.blue;
+
+            }
             slowTimer -= Time.deltaTime;
         }
         if (currentHp <= 0)
@@ -117,7 +127,12 @@ public class Zombie : MonoBehaviour
     {
         dead = true;
         SoundManager.instance.PlayClip(dieSound);
-        yield return new WaitForSeconds(0.5f);
+        GetComponent<Animator>().Play("z_die");
+        yield return new WaitForSeconds(1.5f);
+        if (GameManager.instance.finalWave.Contains(gameObject))
+        {
+            GameManager.instance.finalWave.Remove(gameObject);
+        }
         Destroy(gameObject);
     }
     public void Slowed()

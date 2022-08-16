@@ -25,10 +25,10 @@ public class Pea : MonoBehaviour
         if (collision.CompareTag("Zombie"))
         {
             if (!collided)
-            {
-                collided = true;
+            {               
                 if (!collision.GetComponent<Zombie>().dead)
                 {
+                    collided = true;
                     collision.GetComponent<Zombie>().currentHp -= damage;
                     if (snow)
                     {

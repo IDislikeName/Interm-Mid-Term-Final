@@ -28,7 +28,10 @@ public class Shovel : MonoBehaviour, IPointerClickHandler , IPointerEnterHandler
     {
 
     }
-
+    private void OnEnable()
+    {
+        shovel.SetActive(true);
+    }
     // Update is called once per frame
     void Update()
     {
