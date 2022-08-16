@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public AudioClip backGround;
     public GameObject lostText;
     public AudioClip lose;
+    public float targetTime=139.0f;
     public void DeselectAll()
     {
         seedPackets.DeselectAll();
@@ -58,6 +59,12 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         sunText.text  = sun + "";
+        if(currentState==State.PLAYING){
+            targetTime-=Time.deltaTime;
+            if(targetTime<=0.0f){
+               Win();
+            }
+        }
     }
     public void GameStart()
     {
@@ -84,8 +91,17 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RestartGame());
 
     }
+    public void Win(){
+        currentState=State.WON;
+        Debug.Log("win");
+        StartCoroutine(QuitToMenu());
+    }
     IEnumerator RestartGame()
     {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(1);
+    }
+    IEnumerator QuitToMenu(){
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(0);
     }
