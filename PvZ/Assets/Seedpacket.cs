@@ -17,7 +17,7 @@ public class Seedpacket : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (GameManager.instance.currentState == GameManager.State.SELECTING)
+        if (GameManager.instance.currentState == GameManager.State.SELECTING&&Camera.main.transform.position.x==3)
         {
             ToggleChoose();
         }

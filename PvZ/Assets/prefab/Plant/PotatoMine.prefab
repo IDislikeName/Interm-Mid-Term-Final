@@ -103,6 +103,8 @@ MonoBehaviour:
   currentHp: 0
   sunCost: 25
   recharge: 30
+  white: {fileID: 2100000, guid: d037cc40723838347a0da649591b2e3b, type: 2}
+  og: {fileID: 0}
 --- !u!61 &1275315440955226975
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -104,6 +104,8 @@ MonoBehaviour:
   currentHp: 0
   sunCost: 100
   recharge: 7.5
+  white: {fileID: 2100000, guid: d037cc40723838347a0da649591b2e3b, type: 2}
+  og: {fileID: 0}
 --- !u!95 &8286596866448392210
 Animator:
   serializedVersion: 4
