@@ -104,7 +104,6 @@ MonoBehaviour:
   currentHp: 0
   sunCost: 100
   recharge: 7.5
-  ogcolor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!95 &8286596866448392210
 Animator:
   serializedVersion: 4
@@ -170,5 +169,5 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 256
-  offset: {x: 0, y: 0.2, z: 0}
+  offset: {x: 0.2, y: 0.2, z: 0}
   shootSound: {fileID: 8300000, guid: fa068942510ad4a478c815b32588a248, type: 3}

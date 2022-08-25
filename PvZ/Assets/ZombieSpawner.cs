@@ -29,59 +29,93 @@ public class ZombieSpawner : MonoBehaviour
                 StartCoroutine(StartSpawnZombies());
             }
         }
-        if (GameManager.instance.targetTime <= 20)
-        {
-            if (!final)
-                StartCoroutine(FinalWave());
-        }
     }
     IEnumerator StartSpawnZombies()
     {
         yield return new WaitForSeconds(20f);
         SoundManager.instance.PlayClip(spawnClip);
-        Spawn(Random.Range(0, 5),zombie);
-        StartCoroutine(SpawnZombies(15f));
+        Spawn(4, zombie);
+        yield return new WaitForSeconds(7f);
+        Spawn(2, zombie);
+        yield return new WaitForSeconds(18f);
+        Spawn(3, zombie);
+        yield return new WaitForSeconds(17f);
+        Spawn(4, zombie);
+        yield return new WaitForSeconds(1f);
+        Spawn(1, zombie);
+        yield return new WaitForSeconds(19f);
+        Spawn(0, zombie);
+        yield return new WaitForSeconds(1f);
+        Spawn(2, zombie);
+        yield return new WaitForSeconds(17f);
+        Spawn(4, zombie_c);
+        yield return new WaitForSeconds(25f);
+        Spawn(1, zombie);
+        Spawn(2, zombie);
+        Spawn(3, zombie);
+        yield return new WaitForSeconds(12f);
+        Spawn(0, zombie_c);
+        Spawn(4, zombie);
+        yield return new WaitForSeconds(7f);
+        Spawn(2, zombie_c);
+        Spawn(3, zombie);
+        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
+        SoundManager.instance.PlayClip(waveSound);
+        waveText.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        waveText.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        Spawn(4,zombie);
+        Spawn(3,zombie);
+        Spawn(2,zombie_c);
+        Spawn(2,zombie);
+        Spawn(1,zombie);
+        Spawn(1,zombie);
+        Spawn(0,zombie);
+        Spawn(0,zombie_c);
+        yield return new WaitForSeconds(20f);
+        Spawn(4, zombie);
+        Spawn(4, zombie_c);
+        Spawn(3, zombie);
+        Spawn(2, zombie);
+        Spawn(0, zombie_c);
+        yield return new WaitForSeconds(15f);
+        Spawn(0, zombie_b);
+        yield return new WaitForSeconds(15f);
+        Spawn(4, zombie_c);
+        Spawn(3, zombie);
+        Spawn(0, zombie_c);
+        yield return new WaitForSeconds(15f);
+        Spawn(4, zombie_c);
+        Spawn(2, zombie_c);
+        Spawn(1, zombie);
+        yield return new WaitForSeconds(15f);
+        Spawn(4, zombie);
+        Spawn(3, zombie_c);
+        Spawn(0, zombie_c);
+        yield return new WaitForSeconds(15f);
+        Spawn(4, zombie);
+        Spawn(2, zombie_c);
+        Spawn(3, zombie_c);
+        Spawn(1, zombie);
+        yield return new WaitForSeconds(15f);
+        Spawn(2, zombie_b);
+        Spawn(1, zombie);
+        Spawn(0, zombie);
+        yield return new WaitForSeconds(15f);
+        Spawn(4, zombie_c);
+        Spawn(3, zombie_c);
+        Spawn(2, zombie_c);
+        yield return new WaitForSeconds(15f);
+        Spawn(3, zombie_c);
+        Spawn(1, zombie_c);
+        Spawn(1, zombie_c);
+        Spawn(0, zombie);
+        yield return new WaitForSeconds(20f);
+        StartCoroutine(FinalWave());
     }
-    IEnumerator SpawnZombies(float time)
-    {
-        yield return new WaitForSeconds(time);
-        if (GameManager.instance.targetTime >= 150)
-            Spawn(Random.Range(0, 5), zombie);
-        else if (GameManager.instance.targetTime >=100)
-        {
-            int i = Random.Range(0, 3);
-            if(i!=0)
-                Spawn(Random.Range(0, 5), zombie);
-            else
-                Spawn(Random.Range(0, 5), zombie_c);
-        }
-        else if (GameManager.instance.targetTime >= 70)
-        {
-            int i = Random.Range(0, 2);
-            if (i != 0)
-                Spawn(Random.Range(0, 5), zombie);
-            else
-                Spawn(Random.Range(0, 5), zombie_c);
-        }
-        else if (GameManager.instance.targetTime >= 20)
-        {
-            int i = Random.Range(0, 4);
-            if (i == 0)
-                Spawn(Random.Range(0, 5), zombie);
-            else if(i==1||i==2)
-                Spawn(Random.Range(0, 5), zombie_c);
-            else
-                Spawn(Random.Range(0, 5), zombie_b);
-        }
-        if (GameManager.instance.targetTime>=150)
-            StartCoroutine(SpawnZombies(15f));
-        else if (GameManager.instance.targetTime >=100)
-            StartCoroutine(SpawnZombies(12f));
-        else if (GameManager.instance.targetTime >= 70)
-            StartCoroutine(SpawnZombies(10f));
-        else if (GameManager.instance.targetTime >= 20)
-            StartCoroutine(SpawnZombies(7f));
-    }
+
     IEnumerator FinalWave()
     {
         final = true;
@@ -91,14 +125,14 @@ public class ZombieSpawner : MonoBehaviour
         yield return new WaitForSeconds(3f);
         waveText.SetActive(false);
         Spawn(0, zombie,true);
-        Spawn(1, zombie_b,true);
+        Spawn(1, zombie,true);
         Spawn(2, zombie,true);
-        Spawn(3, zombie_c,true);
-        Spawn(4, zombie,true);
+        Spawn(3, zombie,true);
+        Spawn(4, zombie_c,true);
         yield return new WaitForSeconds(4f);
-        Spawn(0, zombie, true);
+        Spawn(0, zombie_b, true);
         Spawn(1, zombie, true);
-        Spawn(2, zombie_b, true);
+        Spawn(2, zombie, true);
         Spawn(3, zombie_c, true);
         Spawn(4, zombie, true);
     }

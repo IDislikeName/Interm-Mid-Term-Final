@@ -30,7 +30,8 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        SetVolBGM(SoundData.mus);
+        SetVolVFX(SoundData.f);
     }
     public void PlayClip(AudioClip cl)
     {
@@ -40,5 +41,13 @@ public class SoundManager : MonoBehaviour
     {
         BGM.clip = cl;
         BGM.Play();
+    }
+    public void SetVolBGM(float val)
+    {
+        BGM.volume = val;
+    }
+    public void SetVolVFX(float val)
+    {
+        aud.volume = val;
     }
 }

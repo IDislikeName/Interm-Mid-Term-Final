@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     public AudioClip backGround;
     public GameObject lostText;
     public AudioClip lose;
-    public float targetTime=200f;
+    public float targetTime=353f;
     private RectTransform progressBarRT;
     public bool cameraMoving = false;
     public List<GameObject> finalWave;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
             
             if(targetTime>0.0f){
                 targetTime -= Time.deltaTime;
-                progressBarRT.localScale = new Vector3((200f-targetTime) / 200f, 1, 1);
+                progressBarRT.localScale = new Vector3((353f-targetTime) / 353, 1, 1);
             }
             else
             {
